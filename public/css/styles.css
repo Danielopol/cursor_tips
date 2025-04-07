@@ -528,3 +528,61 @@
   overflow-x: auto;
   margin-bottom: 1rem;
 }
+
+/* Add these responsive styles to your styles.css file */
+
+/* Mobile-friendly navigation improvements */
+@media (max-width: 768px) {
+  /* Make the navigation container more flexible */
+  nav .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Ensure the logo doesn't take too much space */
+  nav .logo-container img {
+    height: 2rem;
+  }
+  
+  /* Improve navigation items spacing */
+  nav .nav-items {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Make sure important links like Blog are always visible */
+  nav .nav-link {
+    display: inline-block;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    font-weight: 500;
+  }
+  
+  /* Optional: Create a mobile menu toggle for very small screens */
+  .mobile-menu-toggle {
+    display: none;
+  }
+  
+  /* For extremely small screens, consider a hamburger menu */
+  @media (max-width: 480px) {
+    .mobile-menu-toggle {
+      display: block;
+    }
+    
+    .desktop-nav-items {
+      display: none;
+    }
+    
+    .mobile-nav-expanded .desktop-nav-items {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--dark-color);
+      padding: 1rem;
+      z-index: 50;
+    }
+  }
+}
