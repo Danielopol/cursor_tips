@@ -13,7 +13,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Data file paths
-const csvDataPath = path.join(__dirname, '../data/Cursor.csv');
+const csvDataPath = path.join(__dirname, '../public/data/Cursor.csv');
+const blogPostsPath = path.join(__dirname, '../public/data/blog-posts.json');
 
 // Configure email transporter
 // Note: For production, use a proper email service, not this example config
@@ -27,6 +28,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// ROUTES ORDER IS IMPORTANT
+// More specific routes must come before more general routes
+
 // Serve the CSV file directly
 app.get('/data/Cursor.csv', (req, res) => {
   if (fs.existsSync(csvDataPath)) {
@@ -34,6 +38,16 @@ app.get('/data/Cursor.csv', (req, res) => {
     fs.createReadStream(csvDataPath).pipe(res);
   } else {
     res.status(404).send('CSV file not found');
+  }
+});
+
+// Serve the blog posts JSON data
+app.get('/data/blog-posts.json', (req, res) => {
+  if (fs.existsSync(blogPostsPath)) {
+    res.setHeader('Content-Type', 'application/json');
+    fs.createReadStream(blogPostsPath).pipe(res);
+  } else {
+    res.status(404).json({ error: 'Blog posts data not found' });
   }
 });
 
@@ -109,7 +123,22 @@ app.post('/api/submit-tip', [
   }
 });
 
-// Catch-all route to serve the main index.html for client-side routing
+// Blog admin route - most specific path first!
+app.get('/blog/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/blog/admin.html'));
+});
+
+// Individual blog post route
+app.get('/blog/:slug', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/blog/post.html'));
+});
+
+// Blog index route
+app.get('/blog', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/blog/index.html'));
+});
+
+// Catch-all route MUST be last
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
@@ -124,5 +153,13 @@ app.listen(PORT, () => {
     console.warn('Please ensure your Cursor.csv file is placed in the data directory');
   } else {
     console.log(`CSV file found at ${csvDataPath}`);
+  }
+  
+  // Check if blog posts file exists
+  if (!fs.existsSync(blogPostsPath)) {
+    console.warn(`Warning: Blog posts file not found at ${blogPostsPath}`);
+    console.warn('Please ensure your blog-posts.json file is placed in the data directory');
+  } else {
+    console.log(`Blog posts file found at ${blogPostsPath}`);
   }
 });
