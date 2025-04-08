@@ -3,129 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Post Title - CursorTips Blog</title>
+  <title>Blog Post Title - CursorTips</title>
   <meta name="description" content="Blog post description goes here">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="icon" href="/favicon.ico">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <!-- Syntax highlighting for code blocks -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+  
+  <!-- Prism.js for code highlighting (if needed) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+  
+  <!-- This script ensures the blog-page class is applied immediately -->
+  <script>
+    // Apply blog-page class immediately to prevent flash of unwanted elements
+    document.documentElement.classList.add('blog-page-html');
+    
+    // Create a style element to immediately hide elements
+    const style = document.createElement('style');
+    style.textContent = `
+      .nav-items a[href="/blog"] { display: none !important; visibility: hidden !important; }
+      .search-container { display: none !important; visibility: hidden !important; }
+    `;
+    document.head.appendChild(style);
+  </script>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <!-- Navigation (Same as index.html) -->
+<!-- Add the blog-page class directly to the body tag -->
+<body class="bg-gray-50 min-h-screen blog-page" data-page-type="blog">
+  <!-- Navigation -->
   <nav class="bg-gray-900 text-white shadow-lg">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <a href="/" class="flex items-center">
+      <a href="/" class="flex items-center logo-container">
         <img src="/images/Logo.png" alt="CursorTips Logo" class="h-10 mr-3">
         <span class="text-xl font-bold">CursorTips</span>
       </a>
-      <div class="flex items-center space-x-4">
-        <a href="/blog" class="hover:text-blue-300">Blog</a>
+      
+      <!-- Search stays outside mobile menu - will be hidden via CSS for blog pages -->
+      <div class="search-container ml-auto mr-4">
+        <input type="text" id="search-input" placeholder="Search tips..." class="bg-gray-800 text-white rounded-full py-1 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
+      </div>
+      
+      <!-- Mobile menu toggle button -->
+      <button class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="nav-items">
+        <!-- Blog link - will be hidden via CSS for blog pages -->
+        <a href="/blog" class="nav-link text-white hover:text-blue-300 font-medium">Blog</a>
         <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-700">
           <i class="fas fa-moon"></i>
         </button>
-        <div class="relative">
-          <input type="text" id="search-input" placeholder="Search tips..." class="bg-gray-800 text-white rounded-full py-1 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
-        </div>
       </div>
     </div>
   </nav>
 
-  <!-- Blog Post Content -->
-  <article class="py-12">
+  <!-- Blog Header -->
+  <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <!-- Breadcrumbs -->
-        <div class="mb-6 text-sm text-gray-500">
-          <a href="/" class="hover:text-indigo-600">Home</a> &gt; 
-          <a href="/blog" class="hover:text-indigo-600">Blog</a> &gt; 
-          <span id="post-title-breadcrumb">Current Post</span>
+        <div class="mb-4 text-blue-200">
+          <a href="/" class="hover:text-white">Home</a>
+          <span class="mx-2">/</span>
+          <a href="/blog" class="hover:text-white">Blog</a>
+          <span class="mx-2">/</span>
+          <span id="post-title-breadcrumb">Blog Post Title</span>
         </div>
+        
+        <h1 id="post-title" class="text-4xl font-bold mb-4">Blog Post Title</h1>
+        
+        <div class="flex items-center text-blue-100">
+          <span class="flex items-center">
+            <i class="far fa-user mr-1"></i>
+            <span id="post-author">Author Name</span>
+          </span>
+          <span class="mx-3">•</span>
+          <time id="post-date" datetime="2025-01-01" class="flex items-center">
+            <i class="far fa-calendar-alt mr-1"></i>
+            January 1, 2025
+          </time>
+          <span class="mx-3">•</span>
+          <span id="read-time" class="flex items-center">
+            <i class="far fa-clock mr-1"></i>
+            5 min read
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-        <!-- Featured Image -->
-        <img id="post-featured-image" src="" alt="" class="w-full h-auto rounded-lg mb-8 shadow-md">
-
-        <!-- Post Header -->
-        <header class="mb-8">
-          <h1 id="post-title" class="text-4xl font-bold mb-3">Blog Post Title</h1>
+  <!-- Main Content -->
+  <main class="py-10">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <article class="bg-white rounded-lg shadow-md overflow-hidden">
+          <!-- Featured Image -->
+          <img id="post-featured-image" src="" alt="Featured Image" class="w-full h-80 object-cover">
           
-          <div class="flex flex-wrap items-center text-gray-600 mb-4">
-            <span class="flex items-center mr-6">
-              <i class="far fa-calendar-alt mr-2"></i>
-              <time id="post-date" datetime="">January 1, 2025</time>
-            </span>
-            <span class="flex items-center mr-6">
-              <i class="far fa-user mr-2"></i>
-              <span id="post-author">Author Name</span>
-            </span>
-            <span class="flex items-center">
-              <i class="far fa-clock mr-2"></i>
-              <span id="read-time">5 min read</span>
-            </span>
-          </div>
-
-          <!-- Categories -->
-          <div id="post-categories" class="flex flex-wrap gap-2 mb-6">
-            <!-- Will be populated dynamically -->
-          </div>
-        </header>
-
-        <!-- Post Content -->
-        <div id="post-content" class="prose prose-lg max-w-none blog-content">
-          <!-- Will be populated dynamically -->
-        </div>
-
-        <!-- Author Bio -->
-        <div class="mt-12 p-6 bg-gray-100 rounded-lg">
-          <div class="flex items-start">
-            <img id="author-avatar" src="/images/avatar-placeholder.jpg" alt="Author" class="w-16 h-16 rounded-full object-cover mr-4">
-            <div>
-              <h3 id="author-name" class="text-xl font-bold">Author Name</h3>
-              <p id="author-bio" class="text-gray-700">Author bio goes here. This is a brief description about the author of this blog post.</p>
+          <!-- Post Content -->
+          <div class="p-8">
+            <!-- Categories -->
+            <div id="post-categories" class="flex flex-wrap gap-2 mb-6"></div>
+            
+            <!-- Post Body -->
+            <div id="post-content" class="prose max-w-none blog-content">
+              <!-- Content will be loaded dynamically -->
+              <p>Loading content...</p>
+            </div>
+            
+            <!-- Author Bio -->
+            <div class="mt-12 pt-8 border-t border-gray-200">
+              <div class="flex items-center">
+                <img id="author-avatar" src="/images/default-avatar.png" alt="Author" class="w-16 h-16 rounded-full mr-4 object-cover">
+                <div>
+                  <h3 id="author-name" class="text-xl font-bold mb-1">Author Name</h3>
+                  <p id="author-bio" class="text-gray-600">Cursor AI enthusiast and contributor at CursorTips.</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Share Section -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+              <h3 class="text-lg font-bold mb-3">Share this post</h3>
+              <div class="flex space-x-3">
+                <a id="share-twitter" href="#" target="_blank" class="bg-blue-400 text-white p-2 rounded-full hover:bg-blue-500 transition-colors">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a id="share-facebook" href="#" target="_blank" class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a id="share-linkedin" href="#" target="_blank" class="bg-blue-800 text-white p-2 rounded-full hover:bg-blue-900 transition-colors">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a id="share-whatsapp" href="#" target="_blank" class="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition-colors">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+                <button id="copy-link" class="bg-gray-200 text-gray-700 p-2 rounded-full hover:bg-gray-300 transition-colors">
+                  <i class="fas fa-link"></i>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Share Buttons -->
-        <div class="mt-8 flex items-center">
-          <span class="mr-4 text-gray-700 font-medium">Share this article:</span>
-          <div class="flex space-x-3">
-            <a href="#" class="text-blue-600 hover:text-blue-800" id="share-twitter">
-              <i class="fab fa-twitter text-xl"></i>
-            </a>
-            <a href="#" class="text-blue-800 hover:text-blue-900" id="share-facebook">
-              <i class="fab fa-facebook-f text-xl"></i>
-            </a>
-            <a href="#" class="text-green-600 hover:text-green-800" id="share-whatsapp">
-              <i class="fab fa-whatsapp text-xl"></i>
-            </a>
-            <a href="#" class="text-blue-500 hover:text-blue-700" id="share-linkedin">
-              <i class="fab fa-linkedin-in text-xl"></i>
-            </a>
-            <button id="copy-link" class="text-gray-600 hover:text-gray-800">
-              <i class="fas fa-link text-xl"></i>
-            </button>
+        </article>
+        
+        <!-- Related Posts -->
+        <div class="mt-12">
+          <h2 class="text-2xl font-bold mb-6">Related Posts</h2>
+          <div id="related-posts" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Related posts will be loaded dynamically -->
           </div>
         </div>
       </div>
     </div>
-  </article>
+  </main>
 
-  <!-- Related Posts -->
-  <section class="py-12 bg-gray-100">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold mb-8 text-center">Related Posts</h2>
-      <div id="related-posts" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Will be populated dynamically -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer (Same as index.html) -->
-  <footer class="bg-gray-800 text-white py-8">
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8 mt-16">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-4 md:mb-0">
@@ -145,11 +181,6 @@
   </footer>
 
   <!-- Load JavaScript files -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
   <script src="/js/blog-post.js"></script>
-  <script src="/js/main.js"></script>
-  <script src="/js/blog-router.js"></script>
 </body>
 </html>
