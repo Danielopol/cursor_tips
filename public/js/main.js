@@ -36,16 +36,31 @@ const contributeForm = document.getElementById('contribute-form');
 // FAQ elements
 const faqToggles = document.querySelectorAll('.faq-toggle');
 
-// Detect if we're on a blog page and add appropriate class
+// Enhanced detectPageType function with better detection and direct DOM manipulation
 function detectPageType() {
   const path = window.location.pathname;
   const body = document.body;
   
-  // Check if we're on a blog page
-  if (path.startsWith('/blog')) {
+  console.log('Current path:', path);
+  
+  // Check if we're on a blog page - be more explicit with the matching
+  if (path.startsWith('/blog') || path.includes('/blog/')) {
     body.classList.add('blog-page');
+    console.log('✅ Blog page detected, added blog-page class to body');
+    
+    // Force immediate application of blog page styles
+    document.querySelectorAll('.nav-items a[href="/blog"]').forEach(el => {
+      el.style.display = 'none';
+    });
+    
+    document.querySelectorAll('.search-container').forEach(el => {
+      el.style.display = 'none';
+    });
+    
+    console.log('🔍 Directly applied display:none to blog link and search container');
   } else {
     body.classList.remove('blog-page');
+    console.log('❌ Not a blog page, removed blog-page class from body');
   }
 }
 
@@ -445,8 +460,22 @@ function setupMobileMenu() {
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded, initializing application...");
   
-  // Detect page type
+  // Detect page type - must be called first
   detectPageType();
+  
+  // Alternative detection approach for blog pages
+  const path = window.location.pathname;
+  if (path.startsWith('/blog') || path.includes('/blog/')) {
+    document.body.classList.add('blog-page');
+    document.body.setAttribute('data-page-path', path);
+    
+    // Direct DOM manipulation backup approach
+    const blogLinks = document.querySelectorAll('.nav-items a[href="/blog"]');
+    const searchContainers = document.querySelectorAll('.search-container');
+    
+    blogLinks.forEach(link => link.style.display = 'none');
+    searchContainers.forEach(container => container.style.display = 'none');
+  }
   
   // Fetch tips on page load
   fetchTips();
