@@ -36,6 +36,19 @@ const contributeForm = document.getElementById('contribute-form');
 // FAQ elements
 const faqToggles = document.querySelectorAll('.faq-toggle');
 
+// Detect if we're on a blog page and add appropriate class
+function detectPageType() {
+  const path = window.location.pathname;
+  const body = document.body;
+  
+  // Check if we're on a blog page
+  if (path.startsWith('/blog')) {
+    body.classList.add('blog-page');
+  } else {
+    body.classList.remove('blog-page');
+  }
+}
+
 // Fetch tips from the CSV file
 async function fetchTips() {
   try {
@@ -431,6 +444,9 @@ function setupMobileMenu() {
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded, initializing application...");
+  
+  // Detect page type
+  detectPageType();
   
   // Fetch tips on page load
   fetchTips();
