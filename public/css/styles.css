@@ -531,58 +531,118 @@
 
 /* Add these responsive styles to your styles.css file */
 
-/* Mobile-friendly navigation improvements */
+/* Mobile Navigation Styles - Add to your styles.css file */
+
+/* Base responsive nav styles */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+/* Container for nav items */
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+/* Mobile styles */
 @media (max-width: 768px) {
-  /* Make the navigation container more flexible */
-  nav .container {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  .mobile-menu-toggle {
+    display: block;
+    z-index: 20;
   }
   
-  /* Ensure the logo doesn't take too much space */
-  nav .logo-container img {
+  .nav-items {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 70%;
+    max-width: 300px;
+    background-color: #1f2937;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 5rem;
+    padding-left: 2rem;
+    transition: right 0.3s ease;
+    z-index: 10;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark-mode .nav-items {
+    background-color: #111827;
+  }
+  
+  .nav-items.mobile-nav-open {
+    right: 0;
+  }
+  
+  /* Make the Blog link more visible */
+  .nav-items a.nav-link {
+    display: block;
+    margin: 1rem 0;
+    font-size: 1.25rem;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav-items a.nav-link:hover,
+  .nav-items a.nav-link:focus {
+    color: #93c5fd; /* light blue */
+  }
+  
+  /* Add a special highlight to the Blog link */
+  .nav-items a[href="/blog"] {
+    padding: 0.5rem 1rem;
+    background-color: rgba(79, 70, 229, 0.2);
+    border-radius: 0.25rem;
+    font-weight: 600;
+    border-left: 3px solid #6366f1;
+    width: 80%;
+  }
+  
+  /* Search input in mobile nav */
+  .nav-items .relative {
+    margin: 1rem 0;
+    width: 85%;
+  }
+  
+  #search-input {
+    width: 100%;
+  }
+  
+  /* Theme toggle in mobile nav */
+  #theme-toggle {
+    margin: 1rem 0;
+    align-self: flex-start;
+  }
+}
+
+/* For small screens (mobile phones) */
+@media (max-width: 480px) {
+  .nav-items {
+    width: 85%;
+  }
+  
+  .logo-container img {
     height: 2rem;
   }
-  
-  /* Improve navigation items spacing */
-  nav .nav-items {
-    display: flex;
-    align-items: center;
+}
+
+/* For desktop, make sure items remain horizontal */
+@media (min-width: 769px) {
+  .nav-items {
+    flex-direction: row;
   }
   
-  /* Make sure important links like Blog are always visible */
-  nav .nav-link {
-    display: inline-block;
-    padding: 0.5rem;
-    margin-right: 0.5rem;
-    font-weight: 500;
-  }
-  
-  /* Optional: Create a mobile menu toggle for very small screens */
-  .mobile-menu-toggle {
-    display: none;
-  }
-  
-  /* For extremely small screens, consider a hamburger menu */
-  @media (max-width: 480px) {
-    .mobile-menu-toggle {
-      display: block;
-    }
-    
-    .desktop-nav-items {
-      display: none;
-    }
-    
-    .mobile-nav-expanded .desktop-nav-items {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: var(--dark-color);
-      padding: 1rem;
-      z-index: 50;
-    }
+  .nav-items a.nav-link {
+    margin-right: 1.5rem;
   }
 }
