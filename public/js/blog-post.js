@@ -23,6 +23,31 @@ const shareWhatsapp = document.getElementById('share-whatsapp');
 const shareLinkedin = document.getElementById('share-linkedin');
 const copyLink = document.getElementById('copy-link');
 
+// Ensure blog page detection happens immediately
+function setupBlogPage() {
+  console.log('Setting up blog page...');
+  
+  // Add the blog-page class to the body
+  document.body.classList.add('blog-page');
+  document.body.setAttribute('data-page-path', window.location.pathname);
+  
+  // Direct DOM manipulation for immediate effect
+  document.querySelectorAll('.nav-items a[href="/blog"]').forEach(link => {
+    link.style.display = 'none';
+    link.style.visibility = 'hidden';
+  });
+  
+  document.querySelectorAll('.search-container').forEach(container => {
+    container.style.display = 'none';
+    container.style.visibility = 'hidden';
+  });
+  
+  console.log('Blog page setup complete - elements hidden');
+}
+
+// Call this immediately
+setupBlogPage();
+
 // Get post slug from URL
 function getPostSlug() {
   const path = window.location.pathname;
@@ -299,5 +324,20 @@ function showNotification(message, type = 'info') {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
+  // Immediately apply blog page styling again - redundant but ensures it works
+  document.body.classList.add('blog-page');
+  
+  // Hide the blog link and search box again using direct DOM manipulation
+  document.querySelectorAll('.nav-items a[href="/blog"]').forEach(link => {
+    link.style.display = 'none';
+    link.style.visibility = 'hidden';
+  });
+  
+  document.querySelectorAll('.search-container').forEach(container => {
+    container.style.display = 'none';
+    container.style.visibility = 'hidden';
+  });
+  
+  // Load the blog post data
   loadPostData();
 });
