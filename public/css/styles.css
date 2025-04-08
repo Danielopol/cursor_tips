@@ -671,15 +671,29 @@ body.blog-page .search-container {
 
 /* Add this to your styles.css file to hide the Blog link on blog pages */
 
-/* Blog page specific styles */
+/* Add these stronger CSS rules for blog pages at the end of your styles.css file */
 
-/* Hide search container on blog pages */
+/* Stronger blog page specific styles */
+body.blog-page .nav-items a[href="/blog"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 body.blog-page .search-container {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Apply to specific blog paths if URL matching is the issue */
+body[data-page-path^="/blog"] .nav-items a[href="/blog"] {
   display: none !important;
 }
 
-/* Hide blog link when on blog pages */
-body.blog-page .nav-items a[href="/blog"] {
+body[data-page-path^="/blog"] .search-container {
   display: none !important;
 }
 
