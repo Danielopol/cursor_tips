@@ -404,6 +404,30 @@ function applySavedTheme() {
   }
 }
 
+// Mobile menu functionality
+function setupMobileMenu() {
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const navItems = document.querySelector('.nav-items');
+  
+  if (mobileMenuToggle && navItems) {
+    mobileMenuToggle.addEventListener('click', function() {
+      navItems.classList.toggle('mobile-nav-open');
+      
+      // Change icon based on menu state
+      const icon = mobileMenuToggle.querySelector('i');
+      if (icon) {
+        if (navItems.classList.contains('mobile-nav-open')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      }
+    });
+  }
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM loaded, initializing application...");
@@ -413,6 +437,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Apply saved theme
   applySavedTheme();
+  
+  // Initialize mobile menu
+  setupMobileMenu();
   
   // Close modals
   if (closeModal) {
@@ -532,16 +559,4 @@ document.addEventListener('DOMContentLoaded', () => {
   if (themeToggle) {
     themeToggle.addEventListener('click', toggleTheme);
   }
-
-  // Mobile menu functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-  const navContainer = document.querySelector('nav');
-  
-  if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', function() {
-      navContainer.classList.toggle('mobile-nav-expanded');
-    });
-  }
-});
 });
