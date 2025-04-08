@@ -671,12 +671,21 @@ body.blog-page .search-container {
 
 /* Add this to your styles.css file to hide the Blog link on blog pages */
 
-/* Hide blog link when on blog pages */
-body.blog-page .nav-items a[href="/blog"] {
-  display: none;
+/* Blog page specific styles */
+
+/* Hide search container on blog pages */
+body.blog-page .search-container {
+  display: none !important;
 }
 
-/* Hide search on blog pages */
-body.blog-page .search-container {
-  display: none;
+/* Hide blog link when on blog pages */
+body.blog-page .nav-items a[href="/blog"] {
+  display: none !important;
+}
+
+/* For mobile view on blog pages */
+@media (max-width: 768px) {
+  body.blog-page .mobile-menu-toggle {
+    margin-left: auto; /* Push the mobile menu toggle to the right on blog pages */
+  }
 }
