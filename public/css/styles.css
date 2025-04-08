@@ -668,3 +668,15 @@ body.blog-page .search-container {
     margin-right: 1.5rem;
   }
 }
+
+/* Add this to your styles.css file to hide the Blog link on blog pages */
+
+/* Hide blog link when on blog pages */
+body.blog-page .nav-items a[href="/blog"] {
+  display: none;
+}
+
+/* Hide search on blog pages */
+body.blog-page .search-container {
+  display: none;
+}
