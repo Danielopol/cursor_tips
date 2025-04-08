@@ -9,6 +9,31 @@ const postsPerPage = 9;
 const blogGrid = document.getElementById('blog-grid');
 const loadMoreBtn = document.getElementById('load-more-posts');
 
+// Ensure blog page detection happens immediately
+function setupBlogPage() {
+  console.log('Setting up blog page...');
+  
+  // Add the blog-page class to the body
+  document.body.classList.add('blog-page');
+  document.body.setAttribute('data-page-path', window.location.pathname);
+  
+  // Direct DOM manipulation for immediate effect
+  document.querySelectorAll('a[href="/blog"]').forEach(link => {
+    link.style.display = 'none';
+    link.style.visibility = 'hidden';
+  });
+  
+  document.querySelectorAll('.relative, .search-container').forEach(container => {
+    container.style.display = 'none';
+    container.style.visibility = 'hidden';
+  });
+  
+  console.log('Blog page setup complete - elements hidden');
+}
+
+// Call this immediately
+setupBlogPage();
+
 // Fetch blog posts from JSON file
 async function fetchBlogPosts() {
   try {
@@ -143,6 +168,10 @@ function createSlug(title) {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
+  // Make sure elements are hidden
+  setupBlogPage();
+  
+  // Fetch blog posts
   fetchBlogPosts();
   
   // Load more posts
